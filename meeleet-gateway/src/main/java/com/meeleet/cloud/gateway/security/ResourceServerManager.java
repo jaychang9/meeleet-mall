@@ -39,13 +39,15 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
-        if (request.getMethod() == HttpMethod.OPTIONS) { // 预检请求放行
+        // 预检请求放行
+        if (request.getMethod() == HttpMethod.OPTIONS) {
             return Mono.just(new AuthorizationDecision(true));
         }
         PathMatcher pathMatcher = new AntPathMatcher();
         String method = request.getMethodValue();
         String path = request.getURI().getPath();
-        String restfulPath = method + ":" + path; // RESTFul接口权限设计: https://www.cnblogs.com/haoxianrui/p/14961707.html
+        // RESTFul接口权限设计: https://www.cnblogs.com/haoxianrui/p/14961707.html
+        String restfulPath = method + ":" + path;
 
         // 如果token以"bearer "为前缀，到此方法里说明JWT有效即已认证
         String token = request.getHeaders().getFirst(SecurityConstants.AUTHORIZATION_KEY);
@@ -92,7 +94,8 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
                 .flatMapIterable(Authentication::getAuthorities)
                 .map(GrantedAuthority::getAuthority)
                 .any(authority -> {
-                    String roleCode = StrUtil.removePrefix(authority, SecurityConstants.AUTHORITY_PREFIX);// ROLE_ADMIN移除前缀ROLE_得到用户的角色编码ADMIN
+                    // ROLE_ADMIN移除前缀ROLE_得到用户的角色编码ADMIN
+                    String roleCode = StrUtil.removePrefix(authority, SecurityConstants.AUTHORITY_PREFIX);
                     if (GlobalConstants.ROOT_ROLE_CODE.equals(roleCode)) {
                         return true; // 如果是超级管理员则放行
                     }
