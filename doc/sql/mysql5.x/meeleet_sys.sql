@@ -2,7 +2,7 @@
 * 系统管理表
 * MySQL5.x版本
 */
-use learn_sys;
+use meeleet_sys;
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -84,11 +84,11 @@ INSERT INTO `sys_dict_item` VALUES ('7', '授权码模式', 'authorization_code'
 INSERT INTO `sys_dict_item` VALUES ('8', '客户端模式', 'client_credentials', 'grant_type', '1', '1', '0', null, '2020-10-17 09:12:36', '2020-12-14 10:11:00');
 INSERT INTO `sys_dict_item` VALUES ('9', '刷新模式', 'refresh_token', 'grant_type', '1', '1', '0', null, '2020-10-17 09:12:57', '2021-01-08 17:33:12');
 INSERT INTO `sys_dict_item` VALUES ('10', '简化模式', 'implicit', 'grant_type', '1', '1', '0', null, '2020-10-17 09:13:23', '2020-12-14 10:11:00');
-INSERT INTO `sys_dict_item` VALUES ('11', '系统服务', 'youlai-admin', 'micro_service', '1', '1', '0', null, '2021-06-17 00:14:12', '2021-06-17 00:14:12');
-INSERT INTO `sys_dict_item` VALUES ('12', '会员服务', 'youlai-ums', 'micro_service', '2', '1', '0', null, '2021-06-17 00:15:06', '2021-06-17 00:15:06');
-INSERT INTO `sys_dict_item` VALUES ('13', '商品服务', 'youlai-pms', 'micro_service', '3', '1', '0', null, '2021-06-17 00:15:26', '2021-06-17 00:16:18');
-INSERT INTO `sys_dict_item` VALUES ('14', '订单服务', 'youlai-oms', 'micro_service', '4', '1', '0', null, '2021-06-17 00:15:40', '2021-06-17 00:16:10');
-INSERT INTO `sys_dict_item` VALUES ('15', '营销服务', 'youlai-sms', 'micro_service', '5', '1', '0', null, '2021-06-17 00:16:01', '2021-06-17 00:16:01');
+INSERT INTO `sys_dict_item` VALUES ('11', '系统服务', 'meeleet-admin', 'micro_service', '1', '1', '0', null, '2021-06-17 00:14:12', '2021-06-17 00:14:12');
+INSERT INTO `sys_dict_item` VALUES ('12', '会员服务', 'meeleet-ums', 'micro_service', '2', '1', '0', null, '2021-06-17 00:15:06', '2021-06-17 00:15:06');
+INSERT INTO `sys_dict_item` VALUES ('13', '商品服务', 'meeleet-pms', 'micro_service', '3', '1', '0', null, '2021-06-17 00:15:26', '2021-06-17 00:16:18');
+INSERT INTO `sys_dict_item` VALUES ('14', '订单服务', 'meeleet-oms', 'micro_service', '4', '1', '0', null, '2021-06-17 00:15:40', '2021-06-17 00:16:10');
+INSERT INTO `sys_dict_item` VALUES ('15', '营销服务', 'meeleet-sms', 'micro_service', '5', '1', '0', null, '2021-06-17 00:16:01', '2021-06-17 00:16:01');
 INSERT INTO `sys_dict_item` VALUES ('16', '不限', '*', 'request_method', '1', '1', '0', null, '2021-06-17 00:18:34', '2021-06-17 00:18:34');
 INSERT INTO `sys_dict_item` VALUES ('17', 'GET', 'GET', 'request_method', '2', '1', '0', null, '2021-06-17 00:18:55', '2021-06-17 00:18:55');
 INSERT INTO `sys_dict_item` VALUES ('18', 'POST', 'POST', 'request_method', '3', '1', '0', null, '2021-06-17 00:19:06', '2021-06-17 00:19:06');
@@ -174,8 +174,8 @@ INSERT INTO `sys_oauth_client` VALUES ('client', '', '123456', 'all', 'password,
 INSERT INTO `sys_oauth_client` VALUES ('mall-admin-web', '', '123456', 'all', 'password,refresh_token,captcha', null, '', '3600', '7200', null, 'true');
 INSERT INTO `sys_oauth_client` VALUES ('mall-app', '', '123456', 'all', 'sms_code,refresh_token', null, null, '3600', '7200', null, 'true');
 INSERT INTO `sys_oauth_client` VALUES ('mall-weapp', '', '123456', 'all', 'wechat,refresh_token', null, null, '3600', '7200', null, 'true');
-INSERT INTO `sys_oauth_client` VALUES ('youlai-admin', '', '123456', 'all', 'password,client_credentials,refresh_token,authorization_code', null, '', '3600', '7200', null, 'true');
-INSERT INTO `sys_oauth_client` VALUES ('youlai-mall-app', '', '123456', 'all', 'authorization_code,password,refresh_token,implicit,wechat,refresh_token', null, null, '3600', '7200', null, 'true');
+INSERT INTO `sys_oauth_client` VALUES ('meeleet-admin', '', '123456', 'all', 'password,client_credentials,refresh_token,authorization_code', null, '', '3600', '7200', null, 'true');
+INSERT INTO `sys_oauth_client` VALUES ('meeleet-mall-app', '', '123456', 'all', 'authorization_code,password,refresh_token,implicit,wechat,refresh_token', null, null, '3600', '7200', null, 'true');
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -315,9 +315,9 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'root', '有来技术', '0', '$2a$10$xVWsNOhHrCxh5UbpCE7/HuJ.PAOKcYAqRxD2CO2nVnJS.IAXkr5aq', null, '', '17621590365', '1', 'youlaitech@163.com', '0', null, null);
-INSERT INTO `sys_user` VALUES ('2', 'admin', '系统管理员', '1', '$2a$10$yJSqqr6sTxNuYtA6EKcVUe2I4USFCzJ29sNcRrBvtAkSYcNg5ydQ6', '2', 'https://s2.loli.net/2022/04/07/gw1L2Z5sPtS8GIl.gif', '17621210366', '1', 'youlaitech@163.com', '0', '2019-10-10 13:41:22', '2021-06-06 23:41:35');
-INSERT INTO `sys_user` VALUES ('3', 'test', '测试小用户', '1', '$2a$10$MPJkNw.hKT/fZOgwYP8q9eu/rFJJDsNov697AmdkHNJkpjIpVSw2q', '3', 'https://s2.loli.net/2022/04/07/gw1L2Z5sPtS8GIl.gif', '17621210367', '1', 'youlaitech@163.com', '0', '2021-06-05 01:31:29', '2021-06-05 01:31:29');
+INSERT INTO `sys_user` VALUES ('1', 'root', '有来技术', '0', '$2a$10$xVWsNOhHrCxh5UbpCE7/HuJ.PAOKcYAqRxD2CO2nVnJS.IAXkr5aq', null, '', '17621590365', '1', 'meeleettech@163.com', '0', null, null);
+INSERT INTO `sys_user` VALUES ('2', 'admin', '系统管理员', '1', '$2a$10$yJSqqr6sTxNuYtA6EKcVUe2I4USFCzJ29sNcRrBvtAkSYcNg5ydQ6', '2', 'https://s2.loli.net/2022/04/07/gw1L2Z5sPtS8GIl.gif', '17621210366', '1', 'meeleettech@163.com', '0', '2019-10-10 13:41:22', '2021-06-06 23:41:35');
+INSERT INTO `sys_user` VALUES ('3', 'test', '测试小用户', '1', '$2a$10$MPJkNw.hKT/fZOgwYP8q9eu/rFJJDsNov697AmdkHNJkpjIpVSw2q', '3', 'https://s2.loli.net/2022/04/07/gw1L2Z5sPtS8GIl.gif', '17621210367', '1', 'meeleettech@163.com', '0', '2021-06-05 01:31:29', '2021-06-05 01:31:29');
 
 -- ----------------------------
 -- Table structure for sys_user_role

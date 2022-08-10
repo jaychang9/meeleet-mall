@@ -2,7 +2,7 @@
 * 商城会员表
 * MySQL5.x版本
 */
-use learn_member;
+use meeleet_member;
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS=0;

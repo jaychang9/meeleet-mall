@@ -19,19 +19,16 @@
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
         <main.basedir>${basedir}</main.basedir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <modules>
         <!-- 基础设施模块 -->
         <module>meeleet-gateway</module>
+        <module>meeleet-sys</module>
         <module>meeleet-auth</module>
 
         <!-- 底层业务服务模块 -->
         <module>mall-ums</module>
-        <module>mall-sys</module>
         <module>mall-pms</module>
         <module>mall-oms</module>
 
