@@ -1,4 +1,4 @@
-# 以下文件放Nacos Config，Data ID：meeleet-auth.yaml，Group：LEARN_GROUP
+# 以下文件放Nacos Config，Data ID：meeleet-auth.yaml，Group：MEELEET_GROUP
 server:
   port: 8883
 
@@ -25,7 +25,7 @@ dubbo:
     base-packages: com.meeleet.cloud.auth.config,com.meeleet.cloud.auth.security.core.clientdetails,com.meeleet.cloud.auth.security.core.userdetails.member,com.meeleet.cloud.auth.security.core.userdetails.sysuser
   cloud:
     # 不配置默认是订阅所有服务，但是这个是服务提供者，不需要订阅其他服务，所以这里就配置一个自己好了，以免订阅所有服务
-    subscribed-services: learn-sysms,learn-ums
+    subscribed-services: meeleet-sys,mall-ums
   consumer:
     check: false
 
@@ -47,8 +47,8 @@ springdoc:
       client-secret: 123456
       scopes: all
   oauth-flow:
-    token-url: http://localhost:9999/learn-auth/oauth/token
-    refresh-token-url: http://localhost:9999/learn-auth/oauth/refresh_token
+    token-url: http://localhost:9999/meeleet-auth/oauth/token
+    refresh-token-url: http://localhost:9999/meeleet-auth/oauth/refresh_token
   server-url: ${gateway.base-url}/${spring.application.name}
   show-actuator: true
   packages-to-scan: com.meeleet.cloud.auth.controller
