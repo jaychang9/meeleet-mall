@@ -1,6 +1,6 @@
-# 以下文件放Nacos Config，Data ID：mall-ums.yaml，Group：LEARN_GROUP
+# 以下文件放Nacos Config，Data ID：meeleet-sys.yaml，Group：MEELEET_GROUP
 server:
-  port: 8804
+  port: 8881
 
 dubbo:
   protocol:
@@ -12,7 +12,7 @@ dubbo:
     address: spring-cloud://localhost
   scan:
     # dubbo 服务扫描基准包
-    base-packages: com.meeleet.learn.sys.rpc.impl
+    base-packages: com.meeleet.cloud.sys.rpc.impl
   cloud:
     # 不配置默认是订阅所有服务，但是这个是服务提供者，不需要订阅其他服务，所以这里就配置一个自己好了，以免订阅所有服务
     subscribed-services: ${spring.application.name}
@@ -22,18 +22,18 @@ spring:
     database: 14
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/learn_sys?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&failOverReadOnly=false&useSSL=false&useUnicode=true
+    url: jdbc:mysql://127.0.0.1:3306/meeleet_sys?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&failOverReadOnly=false&useSSL=false&useUnicode=true
     username: root
     password: 123456
 
 mybatis-plus:
   global-config:
     banner: false
-  type-aliases-package: com.meeleet.learn.sys.pojo.entity
+  type-aliases-package: com.meeleet.cloud.sys.pojo.entity
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mybatis/mapper/*.xml
 
 logging:
   level:
-    com.meeleet.learn.sys.dao: DEBUG
+    com.meeleet.cloud.sys.dao: DEBUG
