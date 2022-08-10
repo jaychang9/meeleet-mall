@@ -1,0 +1,58 @@
+# 以下文件放Nacos Config，Data ID：mall-ums.yaml，Group：MEELEET_GROUP
+server:
+  port: 8804
+
+dubbo:
+  protocol:
+    name: dubbo
+    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
+    port: -1
+  registry:
+    # 挂载到 Spring Cloud 注册中心
+    address: spring-cloud://localhost
+  scan:
+    # dubbo 服务扫描基准包
+    base-packages: com.meeleet.cloud.sys.rpc.impl
+  cloud:
+    # 不配置默认是订阅所有服务，但是这个是服务提供者，不需要订阅其他服务，所以这里就配置一个自己好了，以免订阅所有服务
+    subscribed-services: ${spring.application.name}
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    # No restrictions on table names
+    url: jdbc:h2:mem:test;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    # No restrictions on username and password
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema-h2.sql
+      data-locations: classpath:db/data-h2.sql
+      # No restrictions on username and password
+      username: sa
+      password:
+      encoding: utf-8
+  h2:
+    console:
+      enabled: true
+      settings:
+        trace: true
+        web-allow-others: true
+      path: /h2-console
+
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-field: is_deleted
+      logic-delete-value: 1
+  type-aliases-package: com.meeleet.cloud.sys.pojo.entity
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+logging:
+  level:
+    com.meeleet.cloud.sys.dao: DEBUG

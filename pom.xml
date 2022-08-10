@@ -33,9 +33,9 @@
         <module>mall-oms</module>
 
         <!-- 聚合服务模块 -->
-        <module>mall-admin-web</module>
-        <module>mall-app-web</module>
-        <module>mall-weapp-web</module>
+        <module>mall-web-admin</module>
+        <module>mall-web-app</module>
+        <module>mall-web-weapp</module>
     </modules>
 
 </project>
