@@ -38,5 +38,15 @@
         <module>mall-web-weapp</module>
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.meeleet.mall</groupId>
+                <artifactId>meeleet-sys-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
 
