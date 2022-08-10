@@ -1,6 +1,8 @@
 package com.meeleet.cloud.auth.security.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetailsServiceImpl;
+import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetailsServiceImpl;
 import com.meeleet.cloud.common.auth.security.extension.mobile.SmsCodeAuthenticationProvider;
 import com.meeleet.cloud.common.auth.security.extension.password.DaoxAuthenticationProvider;
 import com.meeleet.cloud.common.auth.security.extension.wechat.WechatAuthenticationProvider;
@@ -23,6 +25,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author jaychang
+ */
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity

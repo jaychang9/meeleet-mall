@@ -1,9 +1,9 @@
-package com.meeleet.learn.auth.security.core.userdetails.sysuser;
+package com.meeleet.cloud.auth.security.core.userdetails.sysuser;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.meeleet.learn.auth.common.enums.PasswordEncoderTypeEnum;
-import com.meeleet.learn.common.constant.GlobalConstants;
-import com.meeleet.learn.sys.pojo.dto.AuthUserDTO;
+import com.meeleet.cloud.common.constant.GlobalConstants;
+import com.meeleet.cloud.common.security.enums.PasswordEncoderTypeEnum;
+import com.meeleet.cloud.sys.pojo.dto.AuthUserDTO;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +17,6 @@ import java.util.Collection;
  * 系统管理用户认证信息
  *
  * @author jaychang
- * @date 2021/9/27
  */
 @Data
 public class SysUserDetails implements UserDetails {
@@ -30,7 +29,7 @@ public class SysUserDetails implements UserDetails {
     /**
      * 扩展字段：认证身份标识，枚举值如下：
      *
-     * @see PasswordEncoderTypeEnum
+     * @see com.meeleet.cloud.common.security.enums.PasswordEncoderTypeEnum
      */
     private String authenticationIdentity;
 

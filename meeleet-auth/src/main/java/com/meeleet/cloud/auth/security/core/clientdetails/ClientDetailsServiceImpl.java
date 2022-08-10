@@ -1,9 +1,10 @@
-package com.meeleet.learn.auth.security.core.clientdetails;
+package com.meeleet.cloud.auth.security.core.clientdetails;
 
 import com.meeleet.cloud.common.security.enums.PasswordEncoderTypeEnum;
 import com.meeleet.cloud.sys.pojo.dto.ClientAuthDTO;
 import com.meeleet.cloud.sys.rpc.ISysOauthClientRpcService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.ClientDetails;

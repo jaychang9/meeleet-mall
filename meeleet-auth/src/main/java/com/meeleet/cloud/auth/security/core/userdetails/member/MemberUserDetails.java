@@ -1,5 +1,7 @@
-package com.meeleet.learn.auth.security.core.userdetails.member;
+package com.meeleet.cloud.auth.security.core.userdetails.member;
 
+import com.meeleet.cloud.common.constant.GlobalConstants;
+import com.meeleet.mall.ums.pojo.dto.MemberAuthInfoDTO;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +25,7 @@ public class MemberUserDetails implements UserDetails {
     private String password;
     private Boolean enabled;
 
+
     /**
      * 扩展字段：认证身份标识，枚举值如下：
      *
@@ -35,7 +38,7 @@ public class MemberUserDetails implements UserDetails {
      *
      * @param member 小程序会员用户认证信息
      */
-    public MemberUserDetails(UmsMemberAuthInfoDTO member) {
+    public MemberUserDetails(MemberAuthInfoDTO member) {
         this.setMemberId(member.getMemberId());
         this.setUsername(member.getUsername());
         this.setPassword(member.getPassword());

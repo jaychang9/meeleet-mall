@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        namespace: prod
+        group: MEELEET_GROUP
+        server-addr: http://nacos.meeleet.tech:8848
+      config:
+        namespace: prod
+        group: MEELEET_GROUP
+        file-extension: yaml
+        prefix: ${spring.application.name}
+        shared-configs[0]:
+          group: MEELEET_GROUP
+          data-id: mall-common.yaml
+          refresh: true

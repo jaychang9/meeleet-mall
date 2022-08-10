@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        namespace: dev
+        group: MEELEET_GROUP
+        server-addr: http://localhost:8848
+      config:
+        namespace: dev
+        group: MEELEET_GROUP
+        file-extension: yaml
+        prefix: ${spring.application.name}
+        shared-configs[0]:
+          group: MEELEET_GROUP
+          data-id: mall-common.yaml
+          refresh: true
+
+logging:
+  level:
+    org.springframework: debug
+

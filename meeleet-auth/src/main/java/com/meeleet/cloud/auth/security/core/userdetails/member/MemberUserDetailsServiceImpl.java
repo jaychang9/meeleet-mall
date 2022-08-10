@@ -1,8 +1,14 @@
-package com.meeleet.learn.auth.security.core.userdetails.member;
+package com.meeleet.cloud.auth.security.core.userdetails.member;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
+import com.meeleet.cloud.common.constant.StringConstant;
+import com.meeleet.cloud.common.result.ResultCode;
+import com.meeleet.cloud.common.security.enums.AuthenticationIdentityEnum;
+import com.meeleet.mall.ums.pojo.dto.MemberAuthInfoDTO;
+import com.meeleet.mall.ums.pojo.dto.MemberDTO;
+import com.meeleet.mall.ums.rpc.IMemberRpcService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -22,7 +28,7 @@ import java.util.Map;
 public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
 
     @DubboReference
-    private IUmsMemberDubboService umsMemberDubboService;
+    private IMemberRpcService memberRpcService;
 
     /**
      * 手机号码认证方式
@@ -31,7 +37,7 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
      * @return
      */
     public UserDetails loadUserByMobile(String mobile) {
-        UmsMemberAuthInfoDTO member = umsMemberDubboService.loadUserByMobile(mobile);
+        MemberAuthInfoDTO member = memberRpcService.loadUserByMobile(mobile);
         return createUserDetails(member, AuthenticationIdentityEnum.MOBILE);
     }
 
@@ -42,7 +48,7 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
      * @return
      */
     public UserDetails loadUserByOpenid(String openid) {
-        UmsMemberAuthInfoDTO member = umsMemberDubboService.loadUserByOpenid(openid);
+        MemberAuthInfoDTO member = memberRpcService.loadUserByOpenid(openid);
         return createUserDetails(member, AuthenticationIdentityEnum.OPENID);
     }
 
@@ -54,11 +60,11 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UmsMemberAuthInfoDTO member = umsMemberDubboService.loadUserByUsername(username);
+        MemberAuthInfoDTO member = memberRpcService.loadUserByUsername(username);
         return createUserDetails(member, AuthenticationIdentityEnum.USERNAME);
     }
 
-    private UserDetails createUserDetails(UmsMemberAuthInfoDTO member, AuthenticationIdentityEnum authenticationIdentityEnum) {
+    private UserDetails createUserDetails(MemberAuthInfoDTO member, AuthenticationIdentityEnum authenticationIdentityEnum) {
         MemberUserDetails userDetails = null;
         if (null != member) {
             userDetails = new MemberUserDetails(member);
@@ -66,7 +72,7 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
             userDetails.setAuthenticationIdentity(authenticationIdentityEnum.getValue());
         }
         if (userDetails == null) {
-            throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMsg());
+            throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMessage());
         } else if (!userDetails.isEnabled()) {
             throw new DisabledException("该账户已被禁用!");
         } else if (!userDetails.isAccountNonLocked()) {
@@ -79,8 +85,8 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
 
     @Override
     public void addUser(Map<String, Object> userInfo) {
-        UmsMemberDTO umsMemberDTO = BeanUtil.mapToBean(userInfo, UmsMemberDTO.class, true, CopyOptions.create());
-        umsMemberDTO.setUsername(StringConstant.USERNAME_PREFIX + umsMemberDTO.getMobile());
-        umsMemberDubboService.addMember(umsMemberDTO);
+        MemberDTO memberDTO = BeanUtil.mapToBean(userInfo, MemberDTO.class, true, CopyOptions.create());
+        memberDTO.setUsername(StringConstant.USERNAME_PREFIX + memberDTO.getMobile());
+        memberRpcService.addMember(memberDTO);
     }
 }
