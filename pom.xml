@@ -45,6 +45,11 @@
                 <artifactId>meeleet-sys-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.meeleet.mall</groupId>
+                <artifactId>mall-ums-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
