@@ -1,9 +1,9 @@
 package com.meeleet.cloud.gateway.captcha.handler;
 
 import cn.hutool.core.util.IdUtil;
-import com.meeleet.cloud.common.constant.StringConstant;
 import com.meeleet.cloud.common.result.R;
 import com.meeleet.cloud.common.security.constant.SecurityConstants;
+import com.meeleet.cloud.common.util.StringPool;
 import com.meeleet.cloud.gateway.captcha.component.CaptchaProducer;
 import com.meeleet.cloud.gateway.captcha.enums.CaptchaTypeEnum;
 import com.wf.captcha.base.Captcha;
@@ -54,7 +54,7 @@ public class CaptchaHandler implements HandlerFunction<ServerResponse> {
         Optional<String> clientIdOption = request.queryParam(SecurityConstants.CLIENT_ID_KEY);
         String clientId = clientIdOption.get();
         Assert.hasText(clientId, "client_id is needed!");
-        String validationCodeKeySuffix = clientId + StringConstant.COLON_SPLIT_STR;
+        String validationCodeKeySuffix = clientId + StringPool.COLON;
         String captchaValue = captcha.text();
         // 对于数学类型的需要进行处理
         if (captchaType == null || captchaType == CaptchaTypeEnum.ARITHMETIC) {
