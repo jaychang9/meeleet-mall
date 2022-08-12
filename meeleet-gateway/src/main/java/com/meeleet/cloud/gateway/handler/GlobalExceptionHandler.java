@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
  * 网关异常通用处理器，只作用在webflux 环境下 , 优先级低于 {@link ResponseStatusExceptionHandler} 执行
  *
  * @author jaychang
- * @date 2022/07/15
  */
 @Slf4j
 @Order(-1)
@@ -43,10 +42,11 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
             response.setStatusCode(((ResponseStatusException) ex).getStatus());
         }
 
+
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
             try {
-                log.warn("Error Spring Cloud Gateway : {} {}", exchange.getRequest().getPath(), ex.getMessage());
+                log.error("[网关异常处理]请求路径:{},异常信息:{}", exchange.getRequest().getPath(), ex.getMessage());
                 return bufferFactory.wrap(JSONUtil.toJsonStr(R.failed(ex.getMessage())).getBytes(StandardCharsets.UTF_8));
             } catch (Exception e) {
                 log.error("Error writing response", ex);

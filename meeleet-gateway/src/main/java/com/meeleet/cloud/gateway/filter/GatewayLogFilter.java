@@ -55,7 +55,8 @@ public class GatewayLogFilter implements GlobalFilter, Ordered {
 
     private final List<HttpMessageReader<?>> messageReaders = HandlerStrategies.withDefaults().messageReaders();
 
-    private static final String X_REAL_IP = "X-Real-IP";// nginx需要配置
+    // nginx需要配置
+    private static final String X_REAL_IP = "X-Real-IP";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

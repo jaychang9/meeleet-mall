@@ -93,12 +93,12 @@
 
         <dependency>
             <groupId>com.meeleet.cloud</groupId>
-            <artifactId>meeleet-mybatis</artifactId>
+            <artifactId>meeleet-common-mybatis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.meeleet.cloud</groupId>
-            <artifactId>meeleet-redis</artifactId>
+            <artifactId>meeleet-common-redis</artifactId>
         </dependency>
 
         <dependency>
