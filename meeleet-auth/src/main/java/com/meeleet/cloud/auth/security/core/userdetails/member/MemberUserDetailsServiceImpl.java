@@ -3,7 +3,6 @@ package com.meeleet.cloud.auth.security.core.userdetails.member;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
-import com.meeleet.cloud.common.constant.StringConstant;
 import com.meeleet.cloud.common.result.ResultCode;
 import com.meeleet.cloud.common.security.enums.AuthenticationIdentityEnum;
 import com.meeleet.mall.ums.pojo.dto.MemberAuthInfoDTO;
@@ -29,6 +28,8 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
 
     @DubboReference
     private IMemberRpcService memberRpcService;
+
+    private static final String USERNAME_PREFIX = "m";
 
     /**
      * 手机号码认证方式
@@ -86,7 +87,7 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
     @Override
     public void addUser(Map<String, Object> userInfo) {
         MemberDTO memberDTO = BeanUtil.mapToBean(userInfo, MemberDTO.class, true, CopyOptions.create());
-        memberDTO.setUsername(StringConstant.USERNAME_PREFIX + memberDTO.getMobile());
+        memberDTO.setUsername(USERNAME_PREFIX + memberDTO.getMobile());
         memberRpcService.addMember(memberDTO);
     }
 }
