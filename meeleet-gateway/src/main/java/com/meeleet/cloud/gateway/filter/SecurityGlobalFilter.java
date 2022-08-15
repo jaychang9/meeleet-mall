@@ -36,7 +36,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class GatewaySecurityFilter implements GlobalFilter, Ordered {
+public class SecurityGlobalFilter implements GlobalFilter, Ordered {
 
     private final RedisTemplate redisTemplate;
 

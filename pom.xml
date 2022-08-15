@@ -36,6 +36,7 @@
         <module>mall-web-admin</module>
         <module>mall-web-app</module>
         <module>mall-web-weapp</module>
+        <module>meeleet-lab</module>
     </modules>
 
     <dependencyManagement>
