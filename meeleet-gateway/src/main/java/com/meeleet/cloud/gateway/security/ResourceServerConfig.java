@@ -49,15 +49,11 @@ public class ResourceServerConfig {
 
     private final ResourceServerManager resourceServerManager;
 
-    @Setter
-    private List<String> ignoreUrls;
+    private final IgnoreUrlPropsConfiguration ignoreUrlPropsConfiguration;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
 
-        if (ignoreUrls == null) {
-            log.error("网关白名单路径读取失败：Nacos配置读取失败，请检查配置中心连接是否正确！");
-        }
 
         http
                 .oauth2ResourceServer()
@@ -68,7 +64,7 @@ public class ResourceServerConfig {
         ;
         http.oauth2ResourceServer().authenticationEntryPoint(authenticationEntryPoint());
         http.authorizeExchange()
-                .pathMatchers(Convert.toStrArray(ignoreUrls)).permitAll()
+                .pathMatchers(Convert.toStrArray(ignoreUrlPropsConfiguration.getUrls())).permitAll()
                 .anyExchange().access(resourceServerManager)
                 .and()
                 .exceptionHandling()

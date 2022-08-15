@@ -47,24 +47,12 @@ spring:
 
 # 白名单(忽略鉴权)配置
 security:
-  ignore-urls:
-    # 认证
-    - /meeleet-auth/oauth/**
-    # 短信验证码
-    - /meeleet-auth/sms-code/**
-    # 图片验证码
-    - /captcha
-    # Other Service Swagger
-    - /*/webjars/**
-    - /*/swagger-resources/**
-    - /*/swagger-ui/**
-    - /*/v3/api-docs
-    # Gateway Swagger
-    - /webjars/**
-    - /swagger-resources/**
-    - /swagger-ui/**
-    - /v3/api-docs/**
-    - /swagger-ui.html
+  ignore:
+    urls:
+      # 认证
+      - /meeleet-auth/oauth/**
+      # 短信验证码
+      - /meeleet-auth/sms-code/**
 
 springdoc:
   api-docs:
