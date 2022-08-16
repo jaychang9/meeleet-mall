@@ -1,5 +1,7 @@
 spring:
   main:
+    # 非web的方式运行
+    web-application-type: none
     allow-circular-references: true
     allow-bean-definition-overriding: true
   application:

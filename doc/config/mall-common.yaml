@@ -1,3 +1,7 @@
+# SpringBoot优雅停机
+server:
+  shutdown: graceful
+
 # 所有项目公共的配置放这里
 spring:
   mvc:
@@ -9,7 +13,6 @@ spring:
       add-mappings: false
   jackson:
     time-zone: GMT+8
-
 
 # 用于解决openapi3，网关聚合微服务文档时，server跨域问题，如果server的地址用网关来转发的就可以解决跨域问题了
 gateway:

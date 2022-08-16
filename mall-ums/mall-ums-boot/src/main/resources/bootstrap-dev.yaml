@@ -14,3 +14,8 @@ spring:
           group: MEELEET_GROUP
           data-id: mall-common.yaml
           refresh: true
+
+dubbo:
+  application:
+    qos-enable: true
+    qos-port: 33333
