@@ -1,4 +1,4 @@
-# 以下文件放Nacos Config，Data ID：mall-admin.yaml，Group：LEARN_GROUP
+# 以下文件放Nacos Config，Data ID：mall-admin.yaml，Group：MEELEET_GROUP
 server:
   port: 8800
 
