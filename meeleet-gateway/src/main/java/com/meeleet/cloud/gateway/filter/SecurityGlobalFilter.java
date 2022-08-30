@@ -107,7 +107,7 @@ public class SecurityGlobalFilter implements GlobalFilter, Ordered {
      * 获取JWT的载体payload
      *
      * @param authorization 请求头authorization
-     * @return
+     * @return payload字符串
      * @throws ParseException
      */
     public String getPayload(String authorization) throws ParseException {
