@@ -84,7 +84,7 @@ public class SysRoleMenuRpcServiceImpl implements ISysRoleMenuRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysRoleMenuService.count();
     }
 

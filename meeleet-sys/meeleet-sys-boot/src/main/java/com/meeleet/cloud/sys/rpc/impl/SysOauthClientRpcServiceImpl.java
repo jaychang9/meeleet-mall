@@ -93,7 +93,7 @@ public class SysOauthClientRpcServiceImpl implements ISysOauthClientRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysOauthClientService.count();
     }
 

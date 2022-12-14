@@ -85,7 +85,7 @@ public class SysRolePermissionRpcServiceImpl implements ISysRolePermissionRpcSer
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysRolePermissionService.count();
     }
 

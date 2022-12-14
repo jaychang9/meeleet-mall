@@ -87,7 +87,7 @@ public class SysPermissionRpcServiceImpl implements ISysPermissionRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysPermissionService.count();
     }
 

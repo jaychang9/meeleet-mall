@@ -89,7 +89,7 @@ public class SysMenuRpcServiceImpl implements ISysMenuRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysMenuService.count();
     }
 

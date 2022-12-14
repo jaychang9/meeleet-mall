@@ -84,7 +84,7 @@ public class SysUserRoleRpcServiceImpl implements ISysUserRoleRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysUserRoleService.count();
     }
 

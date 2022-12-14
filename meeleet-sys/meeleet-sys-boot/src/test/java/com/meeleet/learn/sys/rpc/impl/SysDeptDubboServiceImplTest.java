@@ -101,7 +101,7 @@ class SysDeptRpcServiceImplTest {
 
     @Test
     void count() {
-        int count = sysDeptRpcService.count();
+        long count = sysDeptRpcService.count();
         Assert.isTrue(count > 0);
     }
 

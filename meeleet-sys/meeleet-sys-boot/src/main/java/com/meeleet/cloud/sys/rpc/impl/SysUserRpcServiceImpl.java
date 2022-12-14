@@ -91,7 +91,7 @@ public class SysUserRpcServiceImpl implements ISysUserRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysUserService.count();
     }
 

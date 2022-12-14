@@ -85,7 +85,7 @@ public class SysDictRpcServiceImpl implements ISysDictRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysDictService.count();
     }
 
