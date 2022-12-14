@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
 
-@Import({com.meeleet.cloud.common.mybatis.config.MybatisPlusConfig.class, com.meeleet.cloud.mybatis.handler.MeeleetMetaObjectHandler.class, com.meeleet.cloud.common.redis.RedisConfig.class})
+@Import({com.meeleet.cloud.common.mybatis.config.MybatisPlusConfig.class, com.meeleet.cloud.common.mybatis.handler.MeeleetMetaObjectHandler.class, com.meeleet.cloud.common.redis.RedisConfig.class})
 @SpringBootApplication
 @EnableDiscoveryClient
 public class MeeleetSysApplication {
