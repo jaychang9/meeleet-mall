@@ -88,7 +88,7 @@ public class MemberRpcServiceImpl implements IMemberRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return memberService.count();
     }
 
