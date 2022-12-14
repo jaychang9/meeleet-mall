@@ -7,7 +7,6 @@ import com.meeleet.cloud.common.result.ResultCode;
 import com.meeleet.cloud.common.security.constant.SecurityConstants;
 import com.meeleet.cloud.gateway.util.ResponseUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -32,7 +31,6 @@ import java.io.InputStream;
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.List;
 
 /**
  * 资源服务器配置
