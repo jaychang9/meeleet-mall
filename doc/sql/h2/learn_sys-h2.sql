@@ -64,7 +64,7 @@ INSERT INTO `sys_menu` VALUES (34,32,'RabbitMQ','rabbitmq','lab/rabbit/index','r
 DROP TABLE IF EXISTS `sys_oauth_client`;
 CREATE TABLE `sys_oauth_client` (`client_id` varchar(256) NOT NULL,`resource_ids` varchar(256) NULL DEFAULT NULL,`client_secret` varchar(256) NULL DEFAULT NULL,`scope` varchar(256) NULL DEFAULT NULL,`authorized_grant_types` varchar(256) NULL DEFAULT NULL,`web_server_redirect_uri` varchar(256) NULL DEFAULT NULL,`authorities` varchar(256) NULL DEFAULT NULL,`access_token_validity` int NULL DEFAULT NULL,`refresh_token_validity` int NULL DEFAULT NULL,`additional_information` varchar(4096) NULL DEFAULT NULL,`autoapprove` varchar(256) NULL DEFAULT NULL,PRIMARY KEY (`client_id`));
 INSERT INTO `sys_oauth_client` VALUES ('client','','123456','all','password,refresh_token',NULL,NULL,3600,7200,NULL,'true');
-INSERT INTO `sys_oauth_client` VALUES ('mall-admin','','123456','all','password,refresh_token,captcha',NULL,'',3600,7200,NULL,'true');
+INSERT INTO `sys_oauth_client` VALUES ('mall-admin-web','','123456','all','password,refresh_token,captcha',NULL,'',3600,7200,NULL,'true');
 INSERT INTO `sys_oauth_client` VALUES ('mall-app','','123456','all','sms_code,refresh_token',NULL,NULL,3600,7200,NULL,'true');
 INSERT INTO `sys_oauth_client` VALUES ('mall-weapp','','123456','all','wechat,refresh_token',NULL,NULL,3600,7200,NULL,'true');
 INSERT INTO `sys_oauth_client` VALUES ('youlai-admin','','123456','all','password,client_credentials,refresh_token,authorization_code',NULL,'',3600,7200,NULL,'true');

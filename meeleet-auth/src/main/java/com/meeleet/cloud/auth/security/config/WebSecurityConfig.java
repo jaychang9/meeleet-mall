@@ -35,7 +35,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // 使用构造器注入
     private final SysUserDetailsServiceImpl sysUserDetailsService;
     private final MemberUserDetailsServiceImpl memberUserDetailsService;
     private final WxMaService wxMaService;

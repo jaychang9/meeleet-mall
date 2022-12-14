@@ -171,7 +171,7 @@ CREATE TABLE `sys_oauth_client` (
 -- Records of sys_oauth_client
 -- ----------------------------
 INSERT INTO `sys_oauth_client` VALUES ('client', '', '123456', 'all', 'password,refresh_token', null, null, '3600', '7200', null, 'true');
-INSERT INTO `sys_oauth_client` VALUES ('mall-admin', '', '123456', 'all', 'password,refresh_token,captcha', null, '', '3600', '7200', null, 'true');
+INSERT INTO `sys_oauth_client` VALUES ('mall-admin-web', '', '123456', 'all', 'password,refresh_token,captcha', null, '', '3600', '7200', null, 'true');
 INSERT INTO `sys_oauth_client` VALUES ('mall-app', '', '123456', 'all', 'sms_code,refresh_token', null, null, '3600', '7200', null, 'true');
 INSERT INTO `sys_oauth_client` VALUES ('mall-weapp', '', '123456', 'all', 'wechat,refresh_token', null, null, '3600', '7200', null, 'true');
 INSERT INTO `sys_oauth_client` VALUES ('meeleet-admin', '', '123456', 'all', 'password,client_credentials,refresh_token,authorization_code', null, '', '3600', '7200', null, 'true');
