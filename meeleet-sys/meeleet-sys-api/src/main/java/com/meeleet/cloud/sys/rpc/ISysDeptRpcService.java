@@ -114,7 +114,7 @@ public interface ISysDeptRpcService {
     /**
      * 查询总记录数
      */
-    int count();
+    long count();
 
     /**
      * 查询所有

@@ -88,7 +88,7 @@ public class SysDeptRpcServiceImpl implements ISysDeptRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return sysDeptService.count();
     }
 
