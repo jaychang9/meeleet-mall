@@ -90,7 +90,7 @@ public class MemberAddressRpcServiceImpl implements IMemberAddressRpcService {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return memberAddressService.count();
     }
 
