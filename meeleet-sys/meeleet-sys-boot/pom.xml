@@ -97,12 +97,12 @@
 
         <dependency>
             <groupId>com.meeleet.cloud</groupId>
-            <artifactId>meeleet-common-mybatis</artifactId>
+            <artifactId>meeleet-common-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.meeleet.cloud</groupId>
-            <artifactId>meeleet-common-redis</artifactId>
+            <artifactId>meeleet-mybatis-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
