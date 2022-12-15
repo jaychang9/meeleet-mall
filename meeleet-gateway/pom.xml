@@ -77,7 +77,6 @@
         </dependency>
 
         <!-- Tools -->
-
         <!-- OpenAPI API Document -->
         <dependency>
             <groupId>org.springdoc</groupId>
