@@ -26,7 +26,7 @@ spring:
           uri: lb://mall-admin-web
           predicates:
             # 断言（条件判断，返回值是bool，满足条件的）可以自定义路由配置
-            - Path=/mall-admin/**
+            - Path=/mall-admin-web/**
           filters:
             # 在请求转发路径去掉一层
             - StripPrefix=1
