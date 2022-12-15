@@ -1,6 +1,6 @@
 # 以下文件放Nacos Config，Data ID：mall-admin-web.yaml，Group：MEELEET_GROUP
 server:
-  port: 8800
+  port: 9990
 
 dubbo:
   registry:
