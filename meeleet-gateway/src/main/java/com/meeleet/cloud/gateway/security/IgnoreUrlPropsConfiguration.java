@@ -30,7 +30,7 @@ public class IgnoreUrlPropsConfiguration {
             /** Other Service Swagger */
             "/*/webjars/**",
             "/*/swagger-resources/**",
-			"/*/swagger-ui/**",
+            "/*/swagger-ui/**",
             "/*/v3/api-docs",
             /** Gateway Swagger*/
             "/webjars/**",
@@ -42,16 +42,11 @@ public class IgnoreUrlPropsConfiguration {
 
     private List<String> urls = new ArrayList<>();
 
-    private List<String> client = new ArrayList<>();
-
-    private List<String> ignoreSecurity = new ArrayList<>();
-
     /**
      * 首次加载合并ENDPOINTS
      */
     @PostConstruct
     public void initIgnoreSecurity() {
-        Collections.addAll(ignoreSecurity, SECURITY_ENDPOINTS);
+        Collections.addAll(urls,SECURITY_ENDPOINTS);
     }
-
 }
