@@ -1,3 +1,4 @@
+# 以下文件放Nacos Config，Data ID：mall-minio.yaml，Group：MEELEET_GROUP
 # MinIO 分布式文件系统
 minio:
   endpoint: http://localhost:9000
