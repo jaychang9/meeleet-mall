@@ -88,6 +88,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.meeleet.cloud</groupId>
+            <artifactId>meeleet-common-security</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.meeleet.mall</groupId>
             <artifactId>meeleet-sys-api</artifactId>
         </dependency>
