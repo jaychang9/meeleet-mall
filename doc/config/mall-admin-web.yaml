@@ -36,7 +36,3 @@ springdoc:
   packages-to-scan: com.meeleet.mall.admin.controller
   info:
     version: 1.0.0
-
-# MinIO 分布式文件系统
-minio:
-  default-bucket: ${spring.application.name}
