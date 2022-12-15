@@ -1,0 +1,30 @@
+# 以下文件放Nacos Config，Data ID：mall-admin-web.yaml，Group：MEELEET_GROUP
+server:
+  port: 8800
+
+dubbo:
+  registry:
+    # 挂载到 Spring Cloud 注册中心
+    address: spring-cloud://localhost
+  protocol:
+    name: dubbo
+    port: -1
+  scan:
+    base-packages: com.meeleet.mall.admin.controller
+  cloud:
+    subscribed-services: meeleet-sys
+  consumer:
+    check: false
+
+# springdoc api文档
+
+
+# MinIO 分布式文件系统
+minio:
+  # 自定义域名(非必须)，Nginx配置反向代理转发文件路径
+  custom-domain:
+  # 默认的桶名称(非必须)，每个微服务有单独的默认存储桶，建议具体聚合层服务覆盖此配置
+  default-bucket: ${spring.application.name}
+  endpoint: http://127.0.0.1:9000
+  accessKey: eUui7bSB66lhlZ6j
+  secretKey: xcUYYD6LJ8IfzHFiCA6NHa0KgFFIemuJ
