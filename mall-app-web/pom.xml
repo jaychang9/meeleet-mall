@@ -9,8 +9,8 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>mall-web-app</artifactId>
-  <name>Mall Web App</name>
-  <description>Mall Web App</description>
+  <artifactId>mall-app-web</artifactId>
+  <name>Mall App Web</name>
+  <description>Mall App Web</description>
 
 </project>

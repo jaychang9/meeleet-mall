@@ -9,9 +9,9 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>mall-web-admin</artifactId>
-    <name>Mall Web Admin</name>
-    <description>Mall Web Admin</description>
+    <artifactId>mall-admin-web</artifactId>
+    <name>Mall Admin Web</name>
+    <description>Mall Admin Web</description>
 
     <dependencies>
         <!-- Spring Boot dependencies -->

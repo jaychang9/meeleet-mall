@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mall-web-weapp</artifactId>
-    <name>Mall Web Weapp</name>
-    <description>Mall Web Weapp</description>
+    <artifactId>mall-weapp-web</artifactId>
+    <name>Mall Weapp Web</name>
+    <description>Mall Weapp Web</description>
 
 
 </project>
