@@ -309,7 +309,7 @@ CREATE TABLE `sys_user` (
                             `update_time` datetime DEFAULT NULL COMMENT '更新时间',
                             PRIMARY KEY (`id`) USING BTREE,
                             UNIQUE KEY `uk_login_name` (`username`) USING BTREE,
-                            UNIQUE KEY `uk_mobile` (`mobile`) USING BTREE,
+                            UNIQUE KEY `uk_mobile` (`mobile`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户信息表';
 
 -- ----------------------------
