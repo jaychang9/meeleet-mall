@@ -99,4 +99,9 @@ public class SysUserRoleRpcServiceImpl implements ISysUserRoleRpcService {
         return page.convert(SysUserRoleConvert.INSTANCE::entityToBizDTO);
     }
 
+    @Override
+    public List<String> listRoleCodesByUserId(Long userId) {
+        return sysUserRoleService.listRoleCodesByUserId(userId);
+    }
+
 }

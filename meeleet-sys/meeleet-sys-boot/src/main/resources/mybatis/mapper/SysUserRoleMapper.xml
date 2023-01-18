@@ -6,11 +6,15 @@
 
     <!-- 根据用户ID获取角色ID集合 -->
     <select id="listRoleIdsByUserId" resultType="java.lang.Long">
-        SELECT
-            role_id
-        FROM
-            sys_user_role
-        WHERE
-            user_id = #{userId}
+        SELECT role_id
+        FROM sys_user_role
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 根据用户ID获取角色Code集合 -->
+    <select id="selectRoleCodesByUserId" resultType="java.lang.String">
+        SELECT sr.`code`
+        FROM sys_user_role sur INNER JOIN sys_role sr ON sur.role_id = sr.id
+        WHERE sur.user_id = #{userId}
     </select>
 </mapper>

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.meeleet.cloud.common.pojo.vo.OptionVO;
 import com.meeleet.cloud.sys.pojo.entity.SysMenu;
 import com.meeleet.cloud.sys.pojo.vo.MenuTableVO;
-import com.meeleet.cloud.sys.pojo.vo.NextRouteVO;
+import com.meeleet.cloud.sys.pojo.vo.RouteVO;
 
 import java.util.List;
 
@@ -53,5 +53,5 @@ public interface ISysMenuService extends IService<SysMenu> {
      *
      * @return
      */
-    List<NextRouteVO> listNextRoutes();
+    List<RouteVO> listRoutes();
 }

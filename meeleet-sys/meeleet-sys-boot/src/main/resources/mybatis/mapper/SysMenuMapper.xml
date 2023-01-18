@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.meeleet.cloud.sys.mapper.SysMenuMapper">
-    <resultMap id="BaseResultMap" type="com.meeleet.cloud.sys.dao.SysMenuMapper">
+<mapper namespace="com.meeleet.cloud.sys.dao.SysMenuMapper">
+    <resultMap id="BaseResultMap" type="com.meeleet.cloud.sys.pojo.entity.SysMenu">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
@@ -30,21 +30,21 @@
     </sql>
 
     <select id="listRoutes" resultMap="BaseResultMap">
-        select t1.id,
-               t1.name,
+        SELECT t1.id,
+               t1.`name`,
                t1.parent_id,
-               t1.path,
+               t1.`path`,
                t1.component,
                t1.icon,
                t1.sort,
-               t1.visible,
+               t1.is_visible,
                t1.redirect,
-               t3.code,
-               t1.type
-        from sys_menu t1
-                 left join sys_role_menu t2 on t1.id = t2.menu_id
-                 left join sys_role t3 on t2.role_id = t3.id
-        where t1.visible =${@com.youlai.common.constant.GlobalConstants@STATUS_YES}
-        order by t1.sort asc
+               t1.type,
+               t3.code
+        FROM sys_menu t1
+                 LEFT JOIN sys_role_menu t2 ON t1.id = t2.menu_id
+                 LEFT JOIN sys_role t3 ON t2.role_id = t3.id
+        WHERE t1.is_visible =${@com.meeleet.cloud.common.constant.GlobalConstants@STATUS_YES}
+        ORDER BY t1.sort ASC
     </select>
 </mapper>

@@ -7,7 +7,7 @@ import com.meeleet.cloud.sys.pojo.convert.SysMenuConvert;
 import com.meeleet.cloud.sys.pojo.dto.SysMenuDTO;
 import com.meeleet.cloud.sys.pojo.entity.SysMenu;
 import com.meeleet.cloud.sys.pojo.vo.MenuTableVO;
-import com.meeleet.cloud.sys.pojo.vo.NextRouteVO;
+import com.meeleet.cloud.sys.pojo.vo.RouteVO;
 import com.meeleet.cloud.sys.rpc.ISysMenuRpcService;
 import com.meeleet.cloud.sys.service.ISysMenuService;
 import lombok.AllArgsConstructor;
@@ -136,7 +136,7 @@ public class SysMenuRpcServiceImpl implements ISysMenuRpcService {
 
 
     @Override
-    public List<NextRouteVO> listNextRoutes() {
-        return sysMenuService.listNextRoutes();
+    public List<RouteVO> listNextRoutes() {
+        return sysMenuService.listRoutes();
     }
 }

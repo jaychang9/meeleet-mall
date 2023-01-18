@@ -3,7 +3,6 @@ package com.meeleet.cloud.sys.pojo.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.meeleet.cloud.common.pojo.entity.BaseEntity;
 import com.meeleet.cloud.sys.enums.MenuTypeEnum;
 import lombok.Data;
@@ -18,7 +17,6 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SysMenu extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
@@ -42,6 +40,7 @@ public class SysMenu extends BaseEntity {
 
     private Integer sort;
 
+    @TableField("is_visible")
     private Integer visible;
 
     private String redirect;

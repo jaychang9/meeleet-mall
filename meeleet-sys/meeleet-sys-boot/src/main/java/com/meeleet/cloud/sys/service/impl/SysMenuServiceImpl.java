@@ -13,7 +13,7 @@ import com.meeleet.cloud.sys.enums.MenuTypeEnum;
 import com.meeleet.cloud.sys.dao.SysMenuMapper;
 import com.meeleet.cloud.sys.pojo.entity.SysMenu;
 import com.meeleet.cloud.sys.pojo.vo.MenuTableVO;
-import com.meeleet.cloud.sys.pojo.vo.NextRouteVO;
+import com.meeleet.cloud.sys.pojo.vo.RouteVO;
 import com.meeleet.cloud.sys.service.ISysMenuService;
 import com.meeleet.cloud.sys.service.ISysPermissionService;
 import lombok.RequiredArgsConstructor;
@@ -215,9 +215,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      */
     @Override
     @Cacheable(cacheNames = "system", key = "'routes'")
-    public List<NextRouteVO> listNextRoutes() {
+    public List<RouteVO> listRoutes() {
         List<SysMenu> menuList = this.baseMapper.listRoutes();
-        List<NextRouteVO> list = recursionNextRoute(SystemConstants.ROOT_MENU_ID, menuList);
+        List<RouteVO> list = recursionRoute(SystemConstants.ROOT_MENU_ID, menuList);
         return list;
     }
 
@@ -229,32 +229,34 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @param menuList 菜单列表
      * @return
      */
-    private List<NextRouteVO> recursionNextRoute(Long parentId, List<SysMenu> menuList) {
-        List<NextRouteVO> list = new ArrayList<>();
+    private List<RouteVO> recursionRoute(Long parentId, List<SysMenu> menuList) {
+        List<RouteVO> list = new ArrayList<>();
         Optional.ofNullable(menuList).ifPresent(menus -> menus.stream().filter(menu -> menu.getParentId().equals(parentId))
                 .forEach(menu -> {
-                    NextRouteVO nextRouteVO = new NextRouteVO();
+                    RouteVO routeVO = new RouteVO();
 
                     MenuTypeEnum menuTypeEnum = menu.getType();
 
                     if (MenuTypeEnum.MENU.equals(menuTypeEnum)) {
-                        nextRouteVO.setName(menu.getPath()); //  根据name路由跳转 this.$router.push({path:xxx})
+                        //  根据name路由跳转 this.$router.push({path:xxx})
+                        routeVO.setName(menu.getPath());
                     }
-                    nextRouteVO.setPath(menu.getPath()); // 根据path路由跳转 this.$router.push({name:xxx})
-                    nextRouteVO.setRedirect(menu.getRedirect());
-                    nextRouteVO.setComponent(menu.getComponent());
+                    // 根据path路由跳转 this.$router.push({name:xxx})
+                    routeVO.setPath(menu.getPath());
+                    routeVO.setRedirect(menu.getRedirect());
+                    routeVO.setComponent(menu.getComponent());
 
-                    NextRouteVO.Meta meta = new NextRouteVO.Meta();
+                    RouteVO.Meta meta = new RouteVO.Meta();
                     meta.setTitle(menu.getName());
                     meta.setIcon(menu.getIcon());
                     meta.setRoles(menu.getRoles());
                     meta.setHidden(!GlobalConstants.STATUS_YES.equals(menu.getVisible()));
                     meta.setKeepAlive(true);
 
-                    nextRouteVO.setMeta(meta);
-                    List<NextRouteVO> children = recursionNextRoute(menu.getId(), menuList);
-                    nextRouteVO.setChildren(children);
-                    list.add(nextRouteVO);
+                    routeVO.setMeta(meta);
+                    List<RouteVO> children = recursionRoute(menu.getId(), menuList);
+                    routeVO.setChildren(children);
+                    list.add(routeVO);
                 }));
         return list;
     }
