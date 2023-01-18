@@ -2,21 +2,19 @@ package com.meeleet.cloud.sys.pojo.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.meeleet.cloud.common.pojo.vo.BaseVO;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author jaychang
- * @date 2020-11-06
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RouteVO extends BaseVO {
 
-    private static final long serialVersionUID = 4019862636175799744L;
+    private static final long serialVersionUID = -2455256689136501855L;
 
     private String path;
 
@@ -24,24 +22,31 @@ public class RouteVO extends BaseVO {
 
     private String redirect;
 
-    /**
-     * 如果设置为 true
-     */
-    private Boolean alwaysShow;
-
     private String name;
-
-    private Boolean hidden;
 
     private Meta meta;
 
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Meta {
+    public static class Meta implements Serializable {
+
         private String title;
+
         private String icon;
+
+        private Boolean hidden;
+
+        /**
+         * 如果设置为 true，目录没有子节点也会显示
+         */
+        private Boolean alwaysShow;
+
         private List<String> roles;
+
+        /**
+         * 页面缓存开启状态
+         */
+        private Boolean keepAlive;
     }
+
     private List<RouteVO> children;
 }

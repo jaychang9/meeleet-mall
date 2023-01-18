@@ -3,6 +3,7 @@ package com.meeleet.mall.admin.controller;
 import com.meeleet.cloud.common.result.R;
 import com.meeleet.cloud.common.security.util.SysUserUtils;
 import com.meeleet.cloud.sys.pojo.dto.SysUserDTO;
+import com.meeleet.cloud.sys.rpc.ISysUserRoleRpcService;
 import com.meeleet.cloud.sys.rpc.ISysUserRpcService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -13,12 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
+/**
+ * 系统用户
+ *
+ * @author jaychang
+ */
 @RestController
 @RequestMapping("/sys_user")
 public class SysUserController {
     @DubboReference
     private ISysUserRpcService sysUserRpcService;
+
+    @DubboReference
+    private ISysUserRoleRpcService sysUserRoleRpcService;
 
     @Operation(description = "指定ID的系统用户信息")
     @GetMapping("/{id:\\d+}")
@@ -31,7 +39,10 @@ public class SysUserController {
     @GetMapping("/me")
     public R<SysUserDTO> me() {
         Long userId = SysUserUtils.getUserId();
-        return R.success(sysUserRpcService.findById(userId));
+        SysUserDTO sysUserDTO = sysUserRpcService.findById(userId);
+        List<String> roleCodes = sysUserRoleRpcService.listRoleCodesByUserId(userId);
+        sysUserDTO.setRoles(roleCodes);
+        return R.success(sysUserDTO);
     }
 
     @Operation(description = "系统用户列表")

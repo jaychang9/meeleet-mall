@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.meeleet.cloud.common.pojo.vo.OptionVO;
 import com.meeleet.cloud.sys.pojo.dto.SysMenuDTO;
 import com.meeleet.cloud.sys.pojo.vo.MenuTableVO;
-import com.meeleet.cloud.sys.pojo.vo.NextRouteVO;
+import com.meeleet.cloud.sys.pojo.vo.RouteVO;
 
 import java.util.Collection;
 import java.util.List;
@@ -174,5 +174,5 @@ public interface ISysMenuRpcService {
      *
      * @return
      */
-    List<NextRouteVO> listNextRoutes();
+    List<RouteVO> listNextRoutes();
 }

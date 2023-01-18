@@ -122,4 +122,13 @@ public interface ISysUserRoleRpcService {
      * @param size 每页大小
      */
     IPage<SysUserRoleDTO> page(int current, int size);
+
+
+    /**
+     * 根据userId查角色Code列表
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    List<String> listRoleCodesByUserId(Long userId);
 }

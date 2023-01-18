@@ -30,6 +30,7 @@ mybatis-plus:
   global-config:
     banner: false
   type-aliases-package: com.meeleet.cloud.sys.pojo.entity
+  type-enums-package: com.meeleet.cloud.sys.enums
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mybatis/mapper/*.xml
