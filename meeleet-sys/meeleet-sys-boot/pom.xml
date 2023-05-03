@@ -84,6 +84,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Logger -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+
         <!-- Second Part Library -->
         <dependency>
             <groupId>com.meeleet.cloud</groupId>

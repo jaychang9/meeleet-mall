@@ -17,3 +17,8 @@ spring:
 # 用于解决openapi3，网关聚合微服务文档时，server跨域问题，如果server的地址用网关来转发的就可以解决跨域问题了
 gateway:
   base-url: http://localhost:9999
+
+logging:
+  config: classpath:logback-logstash.xml
+  logstash:
+    destination: 10.1.80.221:4560
