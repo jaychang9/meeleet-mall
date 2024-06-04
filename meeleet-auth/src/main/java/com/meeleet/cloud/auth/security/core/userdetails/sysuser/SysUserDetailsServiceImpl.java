@@ -2,6 +2,7 @@ package com.meeleet.cloud.auth.security.core.userdetails.sysuser;
 
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
 import com.meeleet.cloud.common.result.ResultCode;
+import com.meeleet.cloud.common.security.constant.SecurityConstants;
 import com.meeleet.cloud.sys.pojo.dto.AuthUserDTO;
 import com.meeleet.cloud.sys.rpc.ISysUserRpcService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import java.util.Objects;
 @Slf4j
 @Service("sysUserDetailsService")
 public class SysUserDetailsServiceImpl implements ExtUserDetailsService {
+    private static final String ACCOUNT_TYPE = SecurityConstants.MALL_ADMIN_USER_TYPE;
     @DubboReference
     private ISysUserRpcService sysUserRpcService;
 
@@ -52,5 +54,10 @@ public class SysUserDetailsServiceImpl implements ExtUserDetailsService {
             throw new AccountExpiredException("该账号已过期!");
         }
         return userDetails;
+    }
+
+    @Override
+    public boolean supports(String s) {
+        return ACCOUNT_TYPE.equals(s);
     }
 }

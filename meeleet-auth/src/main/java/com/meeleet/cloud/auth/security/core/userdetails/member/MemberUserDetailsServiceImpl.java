@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
 import com.meeleet.cloud.common.result.ResultCode;
+import com.meeleet.cloud.common.security.constant.SecurityConstants;
 import com.meeleet.cloud.common.security.enums.AuthenticationIdentityEnum;
 import com.meeleet.mall.ums.pojo.dto.MemberAuthInfoDTO;
 import com.meeleet.mall.ums.pojo.dto.MemberDTO;
@@ -25,6 +26,8 @@ import java.util.Map;
  */
 @Service("memberUserDetailsService")
 public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
+
+    private static final String ACCOUNT_TYPE = SecurityConstants.MALL_MEMBER_USER_TYPE;
 
     @DubboReference
     private IMemberRpcService memberRpcService;
@@ -89,5 +92,10 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
         MemberDTO memberDTO = BeanUtil.mapToBean(userInfo, MemberDTO.class, true, CopyOptions.create());
         memberDTO.setUsername(USERNAME_PREFIX + memberDTO.getMobile());
         memberRpcService.addMember(memberDTO);
+    }
+
+    @Override
+    public boolean supports(String s) {
+        return ACCOUNT_TYPE.equals(s);
     }
 }
