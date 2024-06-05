@@ -3,12 +3,17 @@ package com.meeleet.cloud.auth.security.config;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetailsServiceImpl;
 import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetailsServiceImpl;
+import com.meeleet.cloud.common.auth.security.extension.mobile.SmsCodeAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.extension.password.PasswordAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.extension.wechat.WechatAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailServiceFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -31,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberUserDetailsServiceImpl memberUserDetailsService;
     private final WxMaService wxMaService;
     private final StringRedisTemplate redisTemplate;
+    private final ExtUserDetailServiceFactory userDetailServiceFactory;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -58,6 +64,55 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(wechatAuthenticationProvider()).
+                authenticationProvider(passwordAuthenticationProvider()).
+                authenticationProvider(smsCodeAuthenticationProvider());
+    }
+
+    /**
+     * 手机验证码认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public SmsCodeAuthenticationProvider smsCodeAuthenticationProvider() {
+        SmsCodeAuthenticationProvider provider = new SmsCodeAuthenticationProvider();
+        provider.setExtUserDetailServiceFactory(userDetailServiceFactory);
+        provider.setRedisTemplate(redisTemplate);
+        return provider;
+    }
+
+    /**
+     * 微信认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public WechatAuthenticationProvider wechatAuthenticationProvider() {
+        WechatAuthenticationProvider provider = new WechatAuthenticationProvider();
+        provider.setExtUserDetailServiceFactory(userDetailServiceFactory);
+        provider.setWxMaService(wxMaService);
+        return provider;
+    }
+
+
+    /**
+     * 用户名密码认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public PasswordAuthenticationProvider passwordAuthenticationProvider() {
+        PasswordAuthenticationProvider provider = new PasswordAuthenticationProvider();
+        provider.setExtUserDetailServiceFactory(userDetailServiceFactory);
+        provider.setPasswordEncoder(passwordEncoder());
+        // 是否隐藏用户不存在异常 默认:true-隐藏，false-抛出异常
+        provider.setHideUserNotFoundExceptions(false);
+        return provider;
     }
 
     /**
