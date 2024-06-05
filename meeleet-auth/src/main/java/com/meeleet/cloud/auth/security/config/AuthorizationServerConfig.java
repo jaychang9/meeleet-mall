@@ -5,16 +5,13 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.meeleet.cloud.auth.security.core.clientdetails.ClientDetailsServiceImpl;
 import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetails;
-import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetailsServiceImpl;
 import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetails;
-import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetailsServiceImpl;
 import com.meeleet.cloud.common.auth.security.extension.captcha.CaptchaTokenGranter;
-import com.meeleet.cloud.common.auth.security.extension.mobile.SmsCodeTokenGranter;
+import com.meeleet.cloud.common.auth.security.extension.sms.SmsCodeTokenGranter;
 import com.meeleet.cloud.common.auth.security.extension.refresh.PreAuthenticatedUserDetailsService;
 import com.meeleet.cloud.common.auth.security.extension.wechat.WechatTokenGranter;
 import com.meeleet.cloud.common.auth.security.filter.CustomClientCredentialsTokenEndpointFilter;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailServiceFactory;
-import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsByNameServiceFactoryWrapper;
 import com.meeleet.cloud.common.result.R;
 import com.meeleet.cloud.common.result.ResultCode;
 import lombok.AllArgsConstructor;
@@ -61,8 +58,6 @@ import java.util.*;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
     private final ClientDetailsServiceImpl clientDetailsService;
-    private final SysUserDetailsServiceImpl sysUserDetailsService;
-    private final MemberUserDetailsServiceImpl memberUserDetailsService;
     private final ExtUserDetailServiceFactory extUserDetailServiceFactory;
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -94,14 +89,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 获取原有默认授权模式(授权码模式、密码模式、客户端模式、简化模式)的授权者
         List<TokenGranter> granterList = new ArrayList<>(Arrays.asList(endpoints.getTokenGranter()));
 
-        // 添加验证码授权模式授权者
+        // 添加手机号密码授权模式授权者
         granterList.add(new CaptchaTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), authenticationManager, stringRedisTemplate
         ));
 
-        // 添加手机短信验证码授权模式的授权者
+        // 添加短信验证码授权模式的授权者
         granterList.add(new SmsCodeTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), authenticationManager
+        ));
+
+        // 添加图片验证码授权模式授权者
+        granterList.add(new CaptchaTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), authenticationManager, stringRedisTemplate
         ));
 
         // 添加微信授权模式的授权者
@@ -110,6 +110,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         ));
 
         CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
+
         endpoints
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(jwtAccessTokenConverter())

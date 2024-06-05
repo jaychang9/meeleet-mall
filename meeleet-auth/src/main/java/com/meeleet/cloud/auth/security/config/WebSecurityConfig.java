@@ -3,7 +3,8 @@ package com.meeleet.cloud.auth.security.config;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetailsServiceImpl;
 import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetailsServiceImpl;
-import com.meeleet.cloud.common.auth.security.extension.mobile.SmsCodeAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.extension.mobile.MobilePasswordAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.extension.sms.SmsCodeAuthenticationProvider;
 import com.meeleet.cloud.common.auth.security.extension.password.PasswordAuthenticationProvider;
 import com.meeleet.cloud.common.auth.security.extension.wechat.WechatAuthenticationProvider;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailServiceFactory;
@@ -68,13 +69,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(wechatAuthenticationProvider()).
-                authenticationProvider(passwordAuthenticationProvider()).
-                authenticationProvider(smsCodeAuthenticationProvider());
+        auth.authenticationProvider(mobilePasswordAuthenticationProvider())
+                .authenticationProvider(wechatAuthenticationProvider())
+                .authenticationProvider(passwordAuthenticationProvider())
+                .authenticationProvider(smsCodeAuthenticationProvider());
     }
 
     /**
-     * 手机验证码认证授权提供者
+     * 手机号密码认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public MobilePasswordAuthenticationProvider mobilePasswordAuthenticationProvider() {
+        MobilePasswordAuthenticationProvider provider = new MobilePasswordAuthenticationProvider();
+        provider.setExtUserDetailsServiceFactory(userDetailServiceFactory);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
+    /**
+     * 短信验证码认证授权提供者
      *
      * @return
      */
