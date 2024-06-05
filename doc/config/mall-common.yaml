@@ -18,6 +18,7 @@ spring:
 gateway:
   base-url: http://localhost:9999
 
+# 如果不用logstash收集日志，暂时可以注释掉
 logging:
   config: classpath:logback-logstash.xml
   logstash:

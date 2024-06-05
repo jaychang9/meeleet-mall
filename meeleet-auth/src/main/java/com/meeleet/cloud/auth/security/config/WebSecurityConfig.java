@@ -3,18 +3,12 @@ package com.meeleet.cloud.auth.security.config;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetailsServiceImpl;
 import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetailsServiceImpl;
-import com.meeleet.cloud.common.auth.security.extension.mobile.SmsCodeAuthenticationProvider;
-import com.meeleet.cloud.common.auth.security.extension.password.DaoxAuthenticationProvider;
-import com.meeleet.cloud.common.auth.security.extension.wechat.WechatAuthenticationProvider;
-import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
-import com.meeleet.cloud.common.security.constant.SecurityConstants;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,8 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author jaychang
@@ -67,70 +59,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(wechatAuthenticationProvider()).
-                authenticationProvider(daoAuthenticationProvider()).
-                authenticationProvider(smsCodeAuthenticationProvider());
-    }
-
-    /**
-     * 手机验证码认证授权提供者
-     *
-     * @return
-     */
-    @Bean
-    public SmsCodeAuthenticationProvider smsCodeAuthenticationProvider() {
-        SmsCodeAuthenticationProvider provider = new SmsCodeAuthenticationProvider();
-        provider.setUserDetailsServiceMap(userDetailsServiceMap());
-        provider.setRedisTemplate(redisTemplate);
-        return provider;
-    }
-
-    /**
-     * 微信认证授权提供者
-     *
-     * @return
-     */
-    @Bean
-    public WechatAuthenticationProvider wechatAuthenticationProvider() {
-        WechatAuthenticationProvider provider = new WechatAuthenticationProvider();
-        provider.setUserDetailsServiceMap(userDetailsServiceMap());
-        provider.setWxMaService(wxMaService);
-        return provider;
-    }
-
-
-    /**
-     * 用户名密码认证授权提供者
-     *
-     * @return
-     */
-    @Bean
-    public DaoxAuthenticationProvider daoAuthenticationProvider() {
-        DaoxAuthenticationProvider provider = new DaoxAuthenticationProvider();
-        provider.setUserDetailsServiceMap(userDetailsServiceMap());
-        provider.setPasswordEncoder(passwordEncoder());
-        // 是否隐藏用户不存在异常 默认:true-隐藏，false-抛出异常
-        provider.setHideUserNotFoundExceptions(false);
-        return provider;
-    }
-
-    /**
-     * 用于支持不同用户体系相同认证方式grant_type的情况
-     *
-     * @return
-     */
-    @Bean
-    public Map<String, ExtUserDetailsService> userDetailsServiceMap() {
-        Map<String, ExtUserDetailsService> clientIdUserDetailsServiceMap = new HashMap<>();
-        clientIdUserDetailsServiceMap.put(SecurityConstants.ADMIN_CLIENT_ID,sysUserDetailsService);
-        clientIdUserDetailsServiceMap.put(SecurityConstants.APP_CLIENT_ID,memberUserDetailsService);
-        clientIdUserDetailsServiceMap.put(SecurityConstants.WEAPP_CLIENT_ID,memberUserDetailsService);
-        return clientIdUserDetailsServiceMap;
-    }
-
 
     /**
      * 密码编码器

@@ -2,6 +2,7 @@ package com.meeleet.cloud.auth.security.core.userdetails.member;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import com.google.common.collect.Sets;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
 import com.meeleet.cloud.common.result.ResultCode;
 import com.meeleet.cloud.common.security.constant.SecurityConstants;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 商城会员用户认证服务
@@ -27,7 +29,7 @@ import java.util.Map;
 @Service("memberUserDetailsService")
 public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
 
-    private static final String ACCOUNT_TYPE = SecurityConstants.MALL_MEMBER_USER_TYPE;
+    private static final Set<String> SUPPORTED_CLIENT_IDS = Sets.newHashSet(SecurityConstants.APP_CLIENT_ID, SecurityConstants.WEAPP_CLIENT_ID);
 
     @DubboReference
     private IMemberRpcService memberRpcService;
@@ -95,7 +97,7 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
     }
 
     @Override
-    public boolean supports(String s) {
-        return ACCOUNT_TYPE.equals(s);
+    public boolean supports(String clientId) {
+        return SUPPORTED_CLIENT_IDS.contains(clientId);
     }
 }

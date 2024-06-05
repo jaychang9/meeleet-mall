@@ -4,3 +4,5 @@
 
 ## 访问swagger的地址
 http://localhost:9999/swagger-ui.html，不然会有跨域问题
+
+## 如果是开发环境 nacos 上记得要创建命名空间 dev 

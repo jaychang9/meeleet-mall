@@ -25,7 +25,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
     @Cacheable(cacheNames = "auth", key = "'oauth-client:'+#clientId")
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        log.info("根据client_id加载客户端信息");
+        log.info("根据client_id:{}加载客户端信息", clientId);
         try {
             ClientAuthDTO client = sysOauthClientRpcService.findOAuth2ClientById(clientId);
             if (Objects.isNull(client)) {

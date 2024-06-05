@@ -13,10 +13,10 @@ import com.meeleet.cloud.common.auth.security.extension.mobile.SmsCodeTokenGrant
 import com.meeleet.cloud.common.auth.security.extension.refresh.PreAuthenticatedUserDetailsService;
 import com.meeleet.cloud.common.auth.security.extension.wechat.WechatTokenGranter;
 import com.meeleet.cloud.common.auth.security.filter.CustomClientCredentialsTokenEndpointFilter;
-import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
+import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailServiceFactory;
+import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsByNameServiceFactoryWrapper;
 import com.meeleet.cloud.common.result.R;
 import com.meeleet.cloud.common.result.ResultCode;
-import com.meeleet.cloud.common.security.constant.SecurityConstants;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -63,6 +63,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final ClientDetailsServiceImpl clientDetailsService;
     private final SysUserDetailsServiceImpl sysUserDetailsService;
     private final MemberUserDetailsServiceImpl memberUserDetailsService;
+    private final ExtUserDetailServiceFactory extUserDetailServiceFactory;
     private final StringRedisTemplate stringRedisTemplate;
 
     /**
@@ -138,16 +139,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         tokenServices.setClientDetailsService(clientDetailsService);
         tokenServices.setTokenEnhancer(tokenEnhancerChain);
 
-        // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
-        Map<String, ExtUserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
-        clientUserDetailsServiceMap.put(SecurityConstants.ADMIN_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
-        clientUserDetailsServiceMap.put(SecurityConstants.APP_CLIENT_ID, memberUserDetailsService); // Android、IOS、H5 移动客户端
-        clientUserDetailsServiceMap.put(SecurityConstants.WEAPP_CLIENT_ID, memberUserDetailsService); // 微信小程序客户端
-
         // 刷新token模式下，重写预认证提供者替换其AuthenticationManager，可自定义根据客户端ID和认证方式区分用户体系获取认证用户信息
         PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-        provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService<>(clientUserDetailsServiceMap));
-        tokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
+        provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService(extUserDetailServiceFactory));
+        tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
 
         /** refresh_token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
          *  1 重复使用：access_token过期刷新时， refresh_token过期时间未改变，仍以初次生成的时间为准
