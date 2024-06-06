@@ -1,6 +1,7 @@
 package com.meeleet.cloud.auth.security.core.userdetails.member;
 
 import com.meeleet.cloud.common.constant.GlobalConstants;
+import com.meeleet.cloud.common.security.enums.AuthenticationIdentityEnum;
 import com.meeleet.mall.ums.pojo.dto.MemberAuthInfoDTO;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

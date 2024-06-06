@@ -4,16 +4,12 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.google.common.collect.Sets;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailsService;
-import com.meeleet.cloud.common.result.ResultCode;
 import com.meeleet.cloud.common.security.constant.SecurityConstants;
 import com.meeleet.cloud.common.security.enums.AuthenticationIdentityEnum;
 import com.meeleet.mall.ums.pojo.dto.MemberAuthInfoDTO;
 import com.meeleet.mall.ums.pojo.dto.MemberDTO;
 import com.meeleet.mall.ums.rpc.IMemberRpcService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.security.authentication.AccountExpiredException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -76,15 +72,6 @@ public class MemberUserDetailsServiceImpl implements ExtUserDetailsService {
             userDetails = new MemberUserDetails(member);
             // 认证身份标识
             userDetails.setAuthenticationIdentity(authenticationIdentityEnum.getValue());
-        }
-        if (userDetails == null) {
-            throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMessage());
-        } else if (!userDetails.isEnabled()) {
-            throw new DisabledException("该账户已被禁用!");
-        } else if (!userDetails.isAccountNonLocked()) {
-            throw new LockedException("该账号已被锁定!");
-        } else if (!userDetails.isAccountNonExpired()) {
-            throw new AccountExpiredException("该账号已过期!");
         }
         return userDetails;
     }

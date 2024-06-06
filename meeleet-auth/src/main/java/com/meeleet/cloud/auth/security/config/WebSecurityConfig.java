@@ -1,12 +1,14 @@
 package com.meeleet.cloud.auth.security.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetailsServiceImpl;
-import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetailsServiceImpl;
 import com.meeleet.cloud.common.auth.security.extension.mobile.MobilePasswordAuthenticationProvider;
-import com.meeleet.cloud.common.auth.security.extension.sms.SmsCodeAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.extension.mobile.MobilePasswordAuthenticationSecurityConfig;
+import com.meeleet.cloud.common.auth.security.extension.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.meeleet.cloud.common.auth.security.extension.password.PasswordAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.extension.password.PasswordAuthenticationSecurityConfig;
+import com.meeleet.cloud.common.auth.security.extension.sms.SmsCodeAuthenticationProvider;
 import com.meeleet.cloud.common.auth.security.extension.wechat.WechatAuthenticationProvider;
+import com.meeleet.cloud.common.auth.security.extension.wechat.WechatAuthenticationSecurityConfig;
 import com.meeleet.cloud.common.auth.security.userdetails.ExtUserDetailServiceFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,15 +35,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final SysUserDetailsServiceImpl sysUserDetailsService;
-    private final MemberUserDetailsServiceImpl memberUserDetailsService;
-    private final WxMaService wxMaService;
-    private final StringRedisTemplate redisTemplate;
+//    private final MobilePasswordAuthenticationSecurityConfig mobilePasswordAuthenticationSecurityConfig;
+//
+//    private final PasswordAuthenticationSecurityConfig passwordAuthenticationSecurityConfig;
+//
+//    private final SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+//
+//    private final WechatAuthenticationSecurityConfig wechatAuthenticationSecurityConfig;
+
     private final ExtUserDetailServiceFactory userDetailServiceFactory;
+
+    private final WxMaService wxMaService;
+
+    private final StringRedisTemplate redisTemplate;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                // 注入自定义的认证配置类
+                //.apply(mobilePasswordAuthenticationSecurityConfig)
+                //.and().apply(passwordAuthenticationSecurityConfig)
+                //.and().apply(smsCodeAuthenticationSecurityConfig)
+                //.and().apply(wechatAuthenticationSecurityConfig)
+                //.and()
+
                 .authorizeRequests()
                 .antMatchers("/oauth/**", "/sms-code/**").permitAll()
                 // swagger2用以下代码

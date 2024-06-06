@@ -7,6 +7,7 @@ import com.meeleet.cloud.auth.security.core.clientdetails.ClientDetailsServiceIm
 import com.meeleet.cloud.auth.security.core.userdetails.member.MemberUserDetails;
 import com.meeleet.cloud.auth.security.core.userdetails.sysuser.SysUserDetails;
 import com.meeleet.cloud.common.auth.security.extension.captcha.CaptchaTokenGranter;
+import com.meeleet.cloud.common.auth.security.extension.mobile.MobilePasswordTokenGranter;
 import com.meeleet.cloud.common.auth.security.extension.sms.SmsCodeTokenGranter;
 import com.meeleet.cloud.common.auth.security.extension.refresh.PreAuthenticatedUserDetailsService;
 import com.meeleet.cloud.common.auth.security.extension.wechat.WechatTokenGranter;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -87,36 +89,40 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints.tokenStore(jwtTokenStore());
 
         // 获取原有默认授权模式(授权码模式、密码模式、客户端模式、简化模式)的授权者
-        List<TokenGranter> granterList = new ArrayList<>(Arrays.asList(endpoints.getTokenGranter()));
+        List<TokenGranter> tokenGranters = new ArrayList<>(Collections.singletonList(endpoints.getTokenGranter()));
 
         // 添加手机号密码授权模式授权者
-        granterList.add(new CaptchaTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
-                endpoints.getOAuth2RequestFactory(), authenticationManager, stringRedisTemplate
+        tokenGranters.add(new MobilePasswordTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), authenticationManager
         ));
 
         // 添加短信验证码授权模式的授权者
-        granterList.add(new SmsCodeTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+        tokenGranters.add(new SmsCodeTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), authenticationManager
         ));
 
         // 添加图片验证码授权模式授权者
-        granterList.add(new CaptchaTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+        tokenGranters.add(new CaptchaTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), authenticationManager, stringRedisTemplate
         ));
 
         // 添加微信授权模式的授权者
-        granterList.add(new WechatTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+        tokenGranters.add(new WechatTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), authenticationManager
         ));
 
-        CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
+        CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(tokenGranters);
 
         endpoints
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .tokenEnhancer(tokenEnhancerChain)
+                // 添加进入tokenGranter
                 .tokenGranter(compositeTokenGranter)
-                .tokenServices(tokenServices(endpoints));
+                // 令牌管理服务，无论哪种模式都需要
+                .tokenServices(tokenServices(endpoints))
+                // 只允许POST提交访问令牌   uri: /oauth/token
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 
     /**

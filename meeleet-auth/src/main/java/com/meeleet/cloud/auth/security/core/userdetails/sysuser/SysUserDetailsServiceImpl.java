@@ -29,7 +29,7 @@ public class SysUserDetailsServiceImpl implements ExtUserDetailsService {
     private ISysUserRpcService sysUserRpcService;
 
     // TODO 测试过期刷新，需要修改过期时间,为了使得即时生效，缓存功能暂时注释掉
-    @Cacheable(cacheNames = "auth", key = "'sysuser:'+#username")
+    // @Cacheable(cacheNames = "auth", key = "'sysuser:'+#username")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AuthUserDTO authUserDTO = sysUserRpcService.findAuthInfoByUsername(username);
@@ -37,7 +37,7 @@ public class SysUserDetailsServiceImpl implements ExtUserDetailsService {
     }
 
     // TODO 测试过期刷新，需要修改过期时间,为了使得即时生效，缓存功能暂时注释掉
-    @Cacheable(cacheNames = "auth", key = "'sysuser:'+#mobile")
+    // @Cacheable(cacheNames = "auth", key = "'sysuser:'+#mobile")
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
         AuthUserDTO authUserDTO = sysUserRpcService.findAuthInfoByMobile(mobile);
         return createUserDetails(authUserDTO);
@@ -47,15 +47,6 @@ public class SysUserDetailsServiceImpl implements ExtUserDetailsService {
         SysUserDetails userDetails = null;
         if (Objects.nonNull(authUserDTO)) {
             userDetails = new SysUserDetails(authUserDTO);
-        }
-        if (Objects.isNull(userDetails)) {
-            throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMessage());
-        } else if (!userDetails.isEnabled()) {
-            throw new DisabledException("该账户已被禁用!");
-        } else if (!userDetails.isAccountNonLocked()) {
-            throw new LockedException("该账号已被锁定!");
-        } else if (!userDetails.isAccountNonExpired()) {
-            throw new AccountExpiredException("该账号已过期!");
         }
         return userDetails;
     }
